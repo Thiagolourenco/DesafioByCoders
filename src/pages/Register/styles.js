@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: 'bold',
     color: Colors.White,
+    textAlign: 'center',
   },
   content: {
     marginTop: 20,
@@ -43,9 +44,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.White,
     fontWeight: 'bold',
-  },
-  btnRegister: {
-    marginTop: 20,
   },
 });
 

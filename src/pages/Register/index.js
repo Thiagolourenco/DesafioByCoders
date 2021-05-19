@@ -13,37 +13,41 @@ import auth from '@react-native-firebase/auth';
 import styles from './styles';
 import {Colors} from '../../constants';
 
-export default function Login() {
+export default function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const {navigate} = useNavigation();
+  const {goBack} = useNavigation();
 
-  function handleSubmit() {
+  function handleRegister() {
     setLoading(true);
     auth()
-      .signInWithEmailAndPassword(username, password)
+      .createUserWithEmailAndPassword(username, password)
       .then(res => {
-        console.log('RES ', res);
+        console.log('Res', res);
         setLoading(false);
-        navigate('Home');
+        goBack();
       })
       .catch(error => {
-        console.log('error', error);
+        console.log('ERROR=>', error);
+        setLoading(false);
       });
+    console.log('username', username, password);
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Cadastro</Text>
 
       <View style={styles.content}>
         <TextInput
-          placeholder="Usuário"
+          placeholder="email@mail"
           style={styles.input}
           value={username}
           onChangeText={setUsername}
+          keyboardType="email-address"
+          autoCapitalize="none"
         />
         <TextInput
           placeholder="*******"
@@ -53,19 +57,12 @@ export default function Login() {
           secureTextEntry
         />
       </View>
-
-      <Pressable style={styles.btn} onPress={handleSubmit}>
+      <Pressable style={styles.btn} onPress={handleRegister}>
         {loading ? (
           <ActivityIndicator size="small" color={Colors.White} />
         ) : (
-          <Text style={styles.btnText}>Logar</Text>
+          <Text style={styles.btnText}>Cadastrar</Text>
         )}
-      </Pressable>
-
-      <Pressable
-        style={styles.btnRegister}
-        onPress={() => navigate('Register')}>
-        <Text style={styles.btnText}>Cadastrar</Text>
       </Pressable>
     </View>
   );

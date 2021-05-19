@@ -2,6 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import Login from '../pages/Login';
+import Register from '../pages/Register';
 import Home from '../pages/Home';
 
 const Stack = createStackNavigator();
@@ -12,6 +13,11 @@ export default function Routes() {
       <Stack.Screen
         name="Login"
         component={Login}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Register"
+        component={Register}
         options={{headerShown: false}}
       />
       <Stack.Screen name="Home" component={Home} />
