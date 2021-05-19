@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "699733596409",
+    "project_id": "desafiobycoders",
+    "storage_bucket": "desafiobycoders.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699733596409:android:eb947635fa7f7e1c382a28",
+        "android_client_info": {
+          "package_name": "com.desafiobycoders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699733596409-0v3pmn50p7ae2samcfr9pe8eko9cr3qa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.desafiobycoders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "699733596409-abuu03tbp26pg0psjrem000ka6gk2p7i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoQ1y_ZkCSOu7xqrDUFwHsr3Nt2ewyRvw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699733596409-abuu03tbp26pg0psjrem000ka6gk2p7i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

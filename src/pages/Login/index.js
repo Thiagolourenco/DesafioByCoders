@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, Pressable} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import styles from './styles';
 
@@ -7,8 +8,11 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const {navigate} = useNavigation();
+
   function handleSubmit() {
     console.log('USERNAME', username, password);
+    navigate('Home');
   }
 
   return (

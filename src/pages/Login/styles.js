@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 32,
     marginTop: 50,
     borderRadius: 30,
-    backgroundColor: Colors.HanPurple,
+    backgroundColor: Colors.BlueRYB,
     justifyContent: 'center',
     alignItems: 'center',
   },
