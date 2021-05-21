@@ -10,12 +10,6 @@ const INITIAL_STATTE = {
 export default function user(state = INITIAL_STATTE, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case '@login/LOGIN_REQUEST': {
-        draft.loading = true;
-        draft.visible = false;
-        break;
-      }
-
       case '@login/LOGIN_SUCCESS': {
         draft.loading = false;
         draft.visible = false;
@@ -23,10 +17,9 @@ export default function user(state = INITIAL_STATTE, action) {
         break;
       }
 
-      case '@login/LOGIN_FAILURE': {
+      case '@login/LOGOUT': {
         draft.loading = false;
-        draft.visible = true;
-        draft.error = action.payload.error;
+        draft.user = null;
         break;
       }
 

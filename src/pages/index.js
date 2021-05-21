@@ -6,6 +6,8 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Home from '../pages/Home';
 
+import RoutesBottom from './bottom';
+
 const Stack = createStackNavigator();
 
 export default function Routes() {
@@ -15,19 +17,24 @@ export default function Routes() {
     <Stack.Navigator initialRouteName="Login">
       {info ? (
         <Stack.Screen
-          name="Login"
-          component={Login}
           options={{headerShown: false}}
+          name="RoutesBottom"
+          component={RoutesBottom}
         />
       ) : (
-        <Stack.Screen
-          name="Register"
-          component={Register}
-          options={{headerShown: false}}
-        />
+        <>
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Register"
+            component={Register}
+            options={{headerShown: false}}
+          />
+        </>
       )}
-
-      <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   );
 }

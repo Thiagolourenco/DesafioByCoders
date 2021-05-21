@@ -9,7 +9,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import auth from '@react-native-firebase/auth';
-// import analytics from '@react'
+import analytics from '@react-native-firebase/analytics';
 
 import styles from './styles';
 import {Colors} from '../../constants';
@@ -21,6 +21,8 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [error, setError] = useState();
 
   // const {, error, visible} = useSelector(({user}) => user);
 
@@ -28,8 +30,7 @@ export default function Login() {
   const dispatch = useDispatch();
 
   async function handleSubmit() {
-    // dispatch(LoginRequest(username, password));
-
+    setLoading(true);
     auth()
       .signInWithEmailAndPassword(username, password)
       .then(res => {
@@ -37,20 +38,19 @@ export default function Login() {
         setLoading(false);
         navigate('Home');
       })
-      .catch(error => {
+      .catch(err => {
+        setError(err);
+        setVisible(true);
+        setLoading(false);
         console.log('error', error);
       });
 
-    // await analytics().logEvent('login', {
-    //   data: {
-    //     email: username,
-    //     password: password,
-    //   },
-    // });
-
-    // if (!loading) {
-    //   navigate('Home');
-    // }
+    await analytics().logEvent('login', {
+      data: {
+        email: username,
+        password: password,
+      },
+    });
   }
 
   return (
@@ -89,7 +89,11 @@ export default function Login() {
         <Text style={styles.btnText}>Cadastrar</Text>
       </Pressable>
 
-      <ModalAlert visible={visible} error={error} />
+      <ModalAlert
+        onRequestClose={() => setVisible(false)}
+        visible={visible}
+        error={error}
+      />
     </View>
   );
 }

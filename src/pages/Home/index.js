@@ -53,8 +53,6 @@ export default function Home() {
     setWatchIdValue(watchId);
   }
 
-  console.log('REGION', region);
-
   return (
     <View style={styles.container}>
       <MapView

@@ -1,10 +1,3 @@
-export function LoginRequest(email, password) {
-  return {
-    type: '@login/LOGIN_REQUEST',
-    payload: {email, password},
-  };
-}
-
 export function LoginSuccess(data) {
   return {
     type: '@login/LOGIN_SUCCESS',
@@ -12,9 +5,8 @@ export function LoginSuccess(data) {
   };
 }
 
-export function LoginFailure(error) {
+export function Logout() {
   return {
-    type: '@login/LOGIN_REQUEST',
-    payload: {error},
+    type: '@login/LOGOUT',
   };
 }
