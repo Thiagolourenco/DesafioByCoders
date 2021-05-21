@@ -1,7 +1,7 @@
-export function LoginRequest(email, password, navigate) {
+export function LoginRequest(email, password) {
   return {
     type: '@login/LOGIN_REQUEST',
-    payload: {email, password, navigate},
+    payload: {email, password},
   };
 }
 

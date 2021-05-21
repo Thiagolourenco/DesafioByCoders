@@ -8,34 +8,49 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import analytics from '@react-native-firebase/analytics';
+import auth from '@react-native-firebase/auth';
+// import analytics from '@react'
 
 import styles from './styles';
 import {Colors} from '../../constants';
-import {LoginRequest} from '../../store/modules/user/actions';
+import {LoginSuccess} from '../../store/modules/user/actions';
+
+import ModalAlert from '../../components/ModalAlert';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const {loading} = useSelector(({user}) => user);
+  // const {, error, visible} = useSelector(({user}) => user);
 
   const {navigate} = useNavigation();
   const dispatch = useDispatch();
 
   async function handleSubmit() {
-    dispatch(LoginRequest(username, password, navigate));
+    // dispatch(LoginRequest(username, password));
 
-    await analytics().logEvent('login', {
-      data: {
-        email: username,
-        password: password,
-      },
-    });
+    auth()
+      .signInWithEmailAndPassword(username, password)
+      .then(res => {
+        dispatch(LoginSuccess(res.user));
+        setLoading(false);
+        navigate('Home');
+      })
+      .catch(error => {
+        console.log('error', error);
+      });
 
-    if (!loading) {
-      navigate('Home');
-    }
+    // await analytics().logEvent('login', {
+    //   data: {
+    //     email: username,
+    //     password: password,
+    //   },
+    // });
+
+    // if (!loading) {
+    //   navigate('Home');
+    // }
   }
 
   return (
@@ -44,10 +59,12 @@ export default function Login() {
 
       <View style={styles.content}>
         <TextInput
-          placeholder="Usuário"
+          placeholder="email"
           style={styles.input}
           value={username}
           onChangeText={setUsername}
+          keyboardType="email-address"
+          autoCapitalize="none"
         />
         <TextInput
           placeholder="*******"
@@ -71,6 +88,8 @@ export default function Login() {
         onPress={() => navigate('Register')}>
         <Text style={styles.btnText}>Cadastrar</Text>
       </Pressable>
+
+      <ModalAlert visible={visible} error={error} />
     </View>
   );
 }

@@ -12,9 +12,33 @@ export default function Home() {
     latitude: 0,
     longitude: 0,
   });
+  const [watchIdValue, setWatchIdValue] = useState(0);
 
   useEffect(() => {
-    Geolocation.getCurrentPosition(position => {
+    Geolocation.getCurrentPosition(
+      position => {
+        const {
+          coords: {latitude, longitude},
+        } = position;
+
+        setRegion({
+          ...region,
+          latitude,
+          longitude,
+        });
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 2000,
+        maximumAge: 1000,
+      },
+    );
+
+    mudaLocation();
+  }, []);
+
+  function mudaLocation() {
+    const watchId = Geolocation.watchPosition(position => {
       const {
         coords: {latitude, longitude},
       } = position;
@@ -25,7 +49,11 @@ export default function Home() {
         longitude,
       });
     });
-  }, [region]);
+
+    setWatchIdValue(watchId);
+  }
+
+  console.log('REGION', region);
 
   return (
     <View style={styles.container}>
