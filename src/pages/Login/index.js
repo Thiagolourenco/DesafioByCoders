@@ -7,31 +7,35 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-
-import auth from '@react-native-firebase/auth';
+import {useDispatch, useSelector} from 'react-redux';
+import analytics from '@react-native-firebase/analytics';
 
 import styles from './styles';
 import {Colors} from '../../constants';
+import {LoginRequest} from '../../store/modules/user/actions';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+
+  const {loading} = useSelector(({user}) => user);
 
   const {navigate} = useNavigation();
+  const dispatch = useDispatch();
 
-  function handleSubmit() {
-    setLoading(true);
-    auth()
-      .signInWithEmailAndPassword(username, password)
-      .then(res => {
-        console.log('RES ', res);
-        setLoading(false);
-        navigate('Home');
-      })
-      .catch(error => {
-        console.log('error', error);
-      });
+  async function handleSubmit() {
+    dispatch(LoginRequest(username, password, navigate));
+
+    await analytics().logEvent('login', {
+      data: {
+        email: username,
+        password: password,
+      },
+    });
+
+    if (!loading) {
+      navigate('Home');
+    }
   }
 
   return (
