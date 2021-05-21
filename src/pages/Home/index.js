@@ -1,18 +1,26 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
+import analytics from '@react-native-firebase/analytics';
+import {useDispatch, useSelector, useStore} from 'react-redux';
 
 import styles from './styles';
+import {Location} from '../../store/modules/user/actions';
 
 export default function Home() {
-  const [region, setRegion] = useState({
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-    latitude: 0,
-    longitude: 0,
-  });
-  const [watchIdValue, setWatchIdValue] = useState(0);
+  // const [region, setRegion] = useState({
+  //   latitudeDelta: 0.0922,
+  //   longitudeDelta: 0.0421,
+  //   latitude: 0,
+  //   longitude: 0,
+  // });
+  const [, setWatchIdValue] = useState(0);
+
+  const {region} = useSelector(({user}) => user);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     Geolocation.getCurrentPosition(
@@ -21,11 +29,20 @@ export default function Home() {
           coords: {latitude, longitude},
         } = position;
 
-        setRegion({
-          ...region,
+        // setRegion({
+        //   ...region,
+        //   latitude,
+        //   longitude,
+        // });
+
+        const data = {
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
           latitude,
           longitude,
-        });
+        };
+
+        dispatch(Location(data));
       },
       {
         enableHighAccuracy: true,
@@ -35,7 +52,14 @@ export default function Home() {
     );
 
     mudaLocation();
-  }, []);
+    analyticsLoad();
+  }, [region]);
+
+  async function analyticsLoad() {
+    await analytics().logEvent('login', {
+      region,
+    });
+  }
 
   function mudaLocation() {
     const watchId = Geolocation.watchPosition(position => {
@@ -43,11 +67,20 @@ export default function Home() {
         coords: {latitude, longitude},
       } = position;
 
-      setRegion({
-        ...region,
+      // setRegion({
+      //   ...region,
+      //   latitude,
+      //   longitude,
+      // });
+
+      const data = {
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
         latitude,
         longitude,
-      });
+      };
+
+      dispatch(Location(data));
     });
 
     setWatchIdValue(watchId);
@@ -63,8 +96,10 @@ export default function Home() {
         region={region}
         initialRegion={region}>
         <Marker
-          coordinate={{latitude: region.latitude, longitude: region.longitude}}
-          // image={{uri: 'custom_pin'}}
+          coordinate={{
+            latitude: region?.latitude,
+            longitude: region?.longitude,
+          }}
         />
       </MapView>
     </View>

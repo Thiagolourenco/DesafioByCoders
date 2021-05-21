@@ -5,6 +5,12 @@ const INITIAL_STATTE = {
   user: {},
   error: null,
   visible: false,
+  region: {
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+    latitude: 0,
+    longitude: 0,
+  },
 };
 
 export default function user(state = INITIAL_STATTE, action) {
@@ -14,6 +20,11 @@ export default function user(state = INITIAL_STATTE, action) {
         draft.loading = false;
         draft.visible = false;
         draft.user = action.payload.data;
+        break;
+      }
+
+      case '@location/LOCATION': {
+        draft.region = action.payload.region;
         break;
       }
 

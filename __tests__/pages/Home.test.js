@@ -5,8 +5,8 @@ import Home from '../../src/pages/Home';
 
 describe('testing screen Home', () => {
   it('Home', () => {
-    renderer.create(<Home />);
+    const tree = renderer.create(<Home />).toJSON();
 
-    // expect(tree).toMatchSnapshot();
+    expect(tree).toMatchSnapshot();
   });
 });

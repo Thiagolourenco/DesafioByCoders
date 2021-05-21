@@ -4,15 +4,15 @@ import renderer from 'react-test-renderer';
 // import configureStore from 'redux-mock-store';
 import {useNavigation} from '@react-navigation/native';
 
-import Login from '../../src/pages/Login';
+import ModalAlert from '../../src/components/ModalAlert';
 
-describe('testing screen login', () => {
+describe('testing component modal Alert', () => {
   const navigate = jest.fn();
 
-  it('Login', () => {
+  it('modal alert', () => {
     useNavigation.mockReturnValue({navigate});
 
-    const tree = renderer.create(<Login />).toJSON();
+    const tree = renderer.create(<ModalAlert />).toJSON();
 
     expect(tree).toMatchSnapshot();
   });

@@ -1,18 +1,17 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-// import {Provider} from 'react-redux';
-// import configureStore from 'redux-mock-store';
+
 import {useNavigation} from '@react-navigation/native';
 
-import Login from '../../src/pages/Login';
+import Register from '../../src/pages/Register';
 
-describe('testing screen login', () => {
+describe('testing screen register', () => {
   const navigate = jest.fn();
 
-  it('Login', () => {
+  it('register', () => {
     useNavigation.mockReturnValue({navigate});
 
-    const tree = renderer.create(<Login />).toJSON();
+    const tree = renderer.create(<Register />).toJSON();
 
     expect(tree).toMatchSnapshot();
   });

@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
     color: Colors.White,
     fontWeight: 'bold',
   },
+  btnRegister: {
+    marginTop: 20,
+  },
 });
 
 export default styles;

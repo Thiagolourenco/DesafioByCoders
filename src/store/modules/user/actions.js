@@ -5,6 +5,13 @@ export function LoginSuccess(data) {
   };
 }
 
+export function Location(region) {
+  return {
+    type: '@location/LOCATION',
+    payload: {region},
+  };
+}
+
 export function Logout() {
   return {
     type: '@login/LOGOUT',

@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import analytics from '@react-native-firebase/analytics';
 
@@ -24,8 +24,6 @@ export default function Login() {
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState();
 
-  // const {, error, visible} = useSelector(({user}) => user);
-
   const {navigate} = useNavigation();
   const dispatch = useDispatch();
 
@@ -33,7 +31,7 @@ export default function Login() {
     setLoading(true);
     auth()
       .signInWithEmailAndPassword(username, password)
-      .then(res => {
+      .then(async res => {
         dispatch(LoginSuccess(res.user));
         setLoading(false);
         navigate('Home');

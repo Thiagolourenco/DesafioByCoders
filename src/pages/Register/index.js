@@ -25,15 +25,12 @@ export default function Register() {
     auth()
       .createUserWithEmailAndPassword(username, password)
       .then(res => {
-        console.log('Res', res);
         setLoading(false);
         goBack();
       })
       .catch(error => {
-        console.log('ERROR=>', error);
         setLoading(false);
       });
-    console.log('username', username, password);
   }
 
   return (
@@ -63,6 +60,10 @@ export default function Register() {
         ) : (
           <Text style={styles.btnText}>Cadastrar</Text>
         )}
+      </Pressable>
+
+      <Pressable style={styles.btnRegister} onPress={() => goBack()}>
+        <Text style={styles.btnText}>Voltar</Text>
       </Pressable>
     </View>
   );
